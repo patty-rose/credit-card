@@ -11,11 +11,6 @@ function creditCardValidator(cardNumber) {
 //   }
 // }
 
-
-let cardNumbers = parseInt(cardNumber[i]);
-
-
-
 function cardnumber(inputtxt)
 {
   var cardno = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
@@ -30,7 +25,7 @@ function cardnumber(inputtxt)
         }
 }
 
-
+//Sana's OG function
 function luhn(cardNumber) {
   const cardNumberArray = Array.from(cardNumber);
   const reversedCardNumber = cardNumberArray.reverse();
@@ -50,23 +45,47 @@ function luhn(cardNumber) {
   console.log(newArray.reverse());
 }
 
-
-
-/*function luhnAlgo(ccNumber) {
-	const ccNumberArr = Array.from(ccNumber);
-  const reversedCCNumber = ccNumberArr.reverse();
-  let newccArr = [];
-  let sum = 0;
-  
-  for (let i = 0; i <= reversedCCNumber.length -1; i++) {
-  	let index = parseInt(reversedCCNumber[i]);
+//Mauro's refactored
+function luhn2(cardNumber) {
+  const cardNumberArray = Array.from(cardNumber);
+  let newArray = []
+  for(let i = cardNumberArray.length-1; i >= 0; i--) {
+    let numAtIndex = parseInt(cardNumberArray[i]);
     if (i % 2 != 0) {
-    	index = index * 2;
-    	} if (ccNumber[i] * 2 > 9) {
-      	sum[i] -9;
-      }
-    console.log(index);
-    newccArr.push(index);
+      numAtIndex *= 2;
+    }
+    // console.log(numAtIndex);
+    newArray.push(numAtIndex);
   }
-  console.log(newccArr.reverse());
-}*/
+  // console.log(newArray.reverse());
+  return (newArray.reverse());
+};
+
+//Patty's magic code
+function findDoubledDigits(cardNumber){
+  let newNumber = luhn2(cardNumber);
+  for (let i=0; i<newNumber.length; i++){
+    if (newNumber[i] > 9){
+      newNumber[i] = newNumber[i]-9;
+    };
+  };
+  return newNumber;
+};
+
+function sumAndCheckLastDigit(newNumber) {
+  let newNumber2 = findDoubledDigits(newNumber);
+  let sum = 0;
+  for(let i = 0; i < newNumber2.length; i++) {
+    sum += newNumber2[i];
+  };
+  if (sum.toString().slice(-1) === "0") {
+    return true;
+  } else {
+    return false;
+  };
+}
+
+
+  // if(sum % 10 === 0) {
+  //   return true
+  // }
